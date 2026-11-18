@@ -11,3 +11,13 @@ def get_all_users(url=db_url):
                         """)
             results=cur.fetchall()
             return results
+
+def get_latest_users(url=db_url):
+    with psycopg.connect(url,row_factory=dict_row) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""SELECT user_id,full_name from users 
+                order by created_at desc 
+                 LIMIT 3;""")
+            results=cur.fetchall()
+            return results
+            

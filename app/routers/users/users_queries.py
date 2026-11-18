@@ -20,4 +20,12 @@ def get_latest_users(url=db_url):
                  LIMIT 3;""")
             results=cur.fetchall()
             return results
-            
+def get_user_by_id(id:int,url=db_url):
+    with psycopg.connect(url,row_factory=dict_row) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+            SELECT * FROM users 
+            where user_id=%s; 
+                        """,(id,))
+            result=cur.fetchone()
+            return result

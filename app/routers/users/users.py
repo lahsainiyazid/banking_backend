@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-from routers.users_queries import (get_all_users,get_latest_users)
-
+from routers.users.users_queries import (get_all_users,get_latest_users,get_user_by_id)
 
 router=APIRouter(prefix="/users",tags=["Users"])
 
@@ -11,3 +10,6 @@ def all_users():
 @router.get("/latest_users")
 def latest_users():
     return get_latest_users()
+@router.get("/user_by_id")
+def user_by_id(id:int):
+    return get_user_by_id(id)

@@ -1,5 +1,5 @@
 from fastapi import APIRouter 
-from routers.accounts_queries import (get_all_accounts,get_active_accounts,
+from routers.accounts.accounts_queries import (get_all_accounts,get_active_accounts,
     get_non_active_accounts,
      get_last_account_date,
      get_accounts_by_balance)

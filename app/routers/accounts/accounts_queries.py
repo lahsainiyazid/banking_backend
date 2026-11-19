@@ -1,6 +1,7 @@
 import psycopg 
 from psycopg.rows import dict_row 
 from db.db_url import db_url 
+from routers.users.create_user import create_user
 
 
 def get_all_accounts(url=db_url):

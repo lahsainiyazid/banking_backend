@@ -14,7 +14,13 @@ def get_all_users(url=db_url):
 def get_latest_users(url=db_url):
     with psycopg.connect(url,row_factory=dict_row) as conn:
         with conn.curosr() as cur:
-            cur.exectue("""SELECT * FROM user 
+            cur.exectue("""SELECT * FROM users 
                 order by created_at DESC; """)
             rows=cur.fetchall()
             return rows
+
+def get_user_by_id(id:int):
+    with psycopg.connect(url) as conn:
+        with conn.cursor() as cur:
+            cur.exectue("""SELECT * FROM users
+                where id=%s;""",(id,))

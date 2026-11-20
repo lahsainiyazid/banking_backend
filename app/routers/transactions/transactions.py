@@ -1,6 +1,8 @@
 from fastapi import APIRouter
-from routers.transactions.transactions_queries import (get_all_transactions,get_top10_transactions)
-
+from routers.transactions.transactions_queries import (get_all_transactions
+    ,get_top10_transactions,
+    post_send_money)
+from decimal import Decimal 
 
 router=APIRouter(prefix="/transactions",tags=["Transactions"])
 @router.get("/all_transactions")
@@ -10,3 +12,6 @@ def all_transactions():
 @router.get("/top10_transactions")
 def top10_transactions():
     return get_top10_transactions()
+@router.post("/send_money")
+def send_money(send_id:int,receiver_id:int,amount:Decimal):
+    return post_send_money(send_id,receiver_id,amount)

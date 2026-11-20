@@ -2,8 +2,7 @@ import psycopg
 from psycopg.rows import dict_row
 import csv
 from routers.db_url import db_url 
-from routers.users.user_classes import create_user
-
+from routers.users.user_classes import create_user,update_user
 def get_all_users(url=db_url):
     with psycopg.connect(url,row_factory=dict_row) as conn:
         with conn.cursor() as cur:
@@ -31,3 +30,23 @@ def post_user(new_user:create_user):
             cur.execute("""INSERT INTO users (user_id,full_name,email,created_at)
             values (%s,%s,%s,%s);""",
         (new_user.user_id,new_user.full_name,new_user.email,new_user.created_at))
+
+def execute_patch_user(id:int,user:update_user,url=db_url):
+    data=user.model_dump(exclude_unset=True,exclude_none=True)
+    if not data:
+        return None 
+    cols=[]
+    vals=[]
+    for (key,value) in data.items():
+        cols.append(f"{key}=%s")
+        vals.append(value)
+    vals.append(id)
+    set_clause=",".join(cols)
+    user_query=f"""UPDATE users set {set_clause} where user_id=%s
+        RETURNING *;"""
+    with psycopg.connect(url) as conn:
+        with conn.cursor() as cur:
+            cur.execute(user_query,vals);
+            row=cur.fetchone()
+            return row
+

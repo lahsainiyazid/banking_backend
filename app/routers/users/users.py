@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from routers.users.user_query import (get_all_users,get_latest_users,get_user_by_id,
-post_user)
+post_user,execute_patch_user)
 from routers.users.create_user import create_user
 router=APIRouter(prefix="/users",tags=["Users"])
 
@@ -18,3 +18,11 @@ def user_by_id(id:int):
 @router.post("/add_user")
 def add_user(user:create_user):
     return post_user(user)
+
+@router.patch("/patch_user/{id}")
+def patch_user(id:int,user:update_user):
+    patch=execute_patch_user()
+    if patch is None:
+        raise ValueError("Invalid User params!")
+    else:
+        return patch

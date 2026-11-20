@@ -7,7 +7,13 @@ authors = [
     { name = "Lahsaini Yazid", email = "lahsainitv@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "dotenv>=0.9.9",
+    "fastapi>=0.163.2",
+    "psycopg[binary]>=3.3.9",
+    "pydantic>=2.14.3",
+    "uvicorn>=0.54.0",
+]
 
 [project.scripts]
 banking = "banking:main"

@@ -1,0 +1,11 @@
+# Banking Backend Checklist
+
+- [+] Implement `GET /users/{id}` and `GET /accounts/{id}`
+- [+] Implement `POST /users` and `POST /accounts`
+- [ ] Implement `PATCH /users/{id}` and `PATCH /accounts/{id}/status`
+- [ ] Implement `POST /transactions/deposit`
+- [ ] Implement `POST /transactions/withdraw`
+- [ ] Implement `POST /transactions/transfer`
+- [ ] Implement `GET /accounts/{id}/transactions`
+- [ ] Add pagination and error handling
+- [ ] Write automated tests

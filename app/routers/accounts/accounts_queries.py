@@ -1,7 +1,7 @@
 import psycopg 
 from psycopg.rows import dict_row 
 from db.db_url import db_url 
-from routers.accounts.create_account import create_account
+from routers.accounts.create_account import create_account,update_status
 
 
 def get_all_accounts(url=db_url):
@@ -61,3 +61,10 @@ def put_account(account:create_account,url=db_url):
             (%s,%s,%s,%s,%s,%s,%s);""",(account.account_id,account.user_id,
                     account.account_type,account.currency,account.status,
                                         account.created_at,account.balance))
+def do_status_update(id:int,update:update_status,url=db_url):
+    with psycopg.connect(url) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""UPDATE accounts 
+            set status=%s
+            where user_id=%s; 
+                        """,(update.status,id))

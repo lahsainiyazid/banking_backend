@@ -12,3 +12,5 @@ class create_account(BaseModel):
     description="Three valid values active,frozen,closed default is active")
     created_at:datetime=Field(description="Date of creation of the account")
     balance:Decimal=Field(default=Decimal("0.00"),ge=0)
+class update_status(BaseModel):
+    status:Literal["active","frozen","closed"]

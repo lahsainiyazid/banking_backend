@@ -1,10 +1,11 @@
 from fastapi import APIRouter
-from routers.accounts.create_account import create_account
+from routers.accounts.create_account import create_account,update_status
 from routers.accounts.accounts_queries import (get_all_accounts,get_active_accounts,
     get_non_active_accounts,
      get_last_account_date,
      get_accounts_by_balance,
-    put_account)
+    put_account,
+do_status_update)
 
 router=APIRouter(prefix="/accounts",tags=["Accounts"])
 
@@ -28,3 +29,7 @@ def accounts_by_balance():
 @router.post("/add_acount")
 def add_account(account:create_account):
     return put_account(account)
+
+@router.patch("/update_status/{user_id}")
+def update_status(user_id:int,update:update_status):
+    return do_status_update(user_id,update) 

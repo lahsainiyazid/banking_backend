@@ -43,6 +43,7 @@ def post_send_money(sender_id:int,receiver_id:int,amount:Decimal,url=db_url):
                 raise ValueError("Invalid Transaction!")
             reference=str(uuid4())
             cur.execute("""
-            INSERT INTO transactions (destination_account_id,amount,created_at,reference)
-            VALUES (%s,%s,%s,%s);
-                        """,(receiver_id,amount,datetime.now(),reference))
+            INSERT INTO transactions (transaction_type,source_account_id,
+            destination_account_id,amount,created_at,reference)
+            VALUES (%s,%s,%s,%s,%s,%s);
+                        """,("transfer",sender_id,receiver_id,amount,datetime.now(),reference))

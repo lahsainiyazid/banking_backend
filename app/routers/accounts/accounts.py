@@ -1,8 +1,10 @@
-from fastapi import APIRouter 
+from fastapi import APIRouter
+from routers.accounts.create_account import create_account
 from routers.accounts.accounts_queries import (get_all_accounts,get_active_accounts,
     get_non_active_accounts,
      get_last_account_date,
-     get_accounts_by_balance)
+     get_accounts_by_balance,
+    put_account)
 
 router=APIRouter(prefix="/accounts",tags=["Accounts"])
 
@@ -23,3 +25,6 @@ def last_account_date():
 def accounts_by_balance():
     return get_accounts_by_balance()
 
+@router.post("/add_acount")
+def add_account(account:create_account):
+    return put_account(account)

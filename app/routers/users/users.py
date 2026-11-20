@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from routers.users.users_queries import (get_all_users,get_latest_users,get_user_by_id,
+from routers.users.user_query import (get_all_users,get_latest_users,get_user_by_id,
 post_user)
 from routers.users.create_user import create_user
 router=APIRouter(prefix="/users",tags=["Users"])

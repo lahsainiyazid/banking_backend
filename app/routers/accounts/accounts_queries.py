@@ -1,7 +1,7 @@
 import psycopg 
 from psycopg.rows import dict_row 
 from db.db_url import db_url 
-from routers.users.create_user import create_user
+from routers.accounts.create_account import create_account
 
 
 def get_all_accounts(url=db_url):
@@ -52,4 +52,12 @@ def get_accounts_by_balance(url=db_url):
             results=cur.fetchall()
             return results
 
-
+def put_account(account:create_account,url=db_url):
+    with psycopg.connect(url) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""INSERT INTO ACCOUNTS 
+            (account_id,user_id,account_type,currency,status,created_at,balance) 
+            VALUES 
+            (%s,%s,%s,%s,%s,%s,%s);""",(account.account_id,account.user_id,
+                    account.account_type,account.currency,account.status,
+                                        account.created_at,account.balance))

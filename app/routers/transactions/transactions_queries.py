@@ -47,3 +47,23 @@ def post_send_money(sender_id:int,receiver_id:int,amount:Decimal,url=db_url):
             destination_account_id,amount,created_at,reference)
             VALUES (%s,%s,%s,%s,%s,%s);
                         """,("transfer",sender_id,receiver_id,amount,datetime.now(),reference))
+
+def post_get_money(id:int,amount:Decimal,url=db_url):
+    if (amount<=0):
+        raise ValueError("Invalid amount!")
+    with psycopg.connect(url) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+            UPDATE accounts set balance=balance-%s
+            where account_id=%s
+            and balance >=%s
+            and status='active';
+                        """,(amount,id,amount))
+            if cur.rowcount!=1:
+                raise ValueError("Invalid Transaction!")
+            reference=str(uuid4())
+            cur.execute("""
+            INSERT INTO transactions (transaction_type,source_account_id,
+            destination_account_id,amount,reference) values(%s,%s,%s,%s,%s);
+                        """,("withdrawal",id,None,amount,reference))
+
